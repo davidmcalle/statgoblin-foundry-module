@@ -1,0 +1,19 @@
+{
+  "name": "rollwatch-foundry-module",
+  "version": "0.1.0",
+  "description": "Rollwatch — Foundry VTT module that sends your table's chat rolls to your self-hosted Rollwatch dashboard.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "24.13.2",
+    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main",
+    "prettier": "3.8.4",
+    "typescript": "5.9.3",
+    "vite": "8.1.0"
+  }
+}
