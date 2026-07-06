@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/foundryvtt-manifest.json",
-  "id": "rollwatch",
-  "title": "Rollwatch",
-  "description": "Collects every roll from your Foundry game and sends it to your self-hosted Rollwatch dashboard.",
+  "id": "statgoblin",
+  "title": "StatGoblin",
+  "description": "Collects every roll from your Foundry game and sends it to your self-hosted StatGoblin dashboard.",
   "version": "0.1.0",
   "type": "module",
   "authors": [{ "name": "David McAllee" }],

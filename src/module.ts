@@ -11,7 +11,7 @@ import { postEvent } from "./ingest";
 Hooks.once("init", () => {
   game.settings!.register(MODULE_ID, INGEST_URL_SETTINGS_KEY, {
     name: "Ingest URL",
-    hint: "Full URL of your Rollwatch ingest endpoint, e.g. https://rolls.example.com/api/ingest. Blank disables collection.",
+    hint: "Full URL of your StatGoblin ingest endpoint, e.g. https://rolls.example.com/api/ingest. Blank disables collection.",
     scope: "world",
     config: true,
     type: String,
@@ -19,7 +19,7 @@ Hooks.once("init", () => {
   });
   game.settings!.register(MODULE_ID, CAMPAIGN_ID_SETTINGS_KEY, {
     name: "Campaign ID",
-    hint: "Your campaign's ID (a UUID) from the Rollwatch campaign page. Blank disables collection.",
+    hint: "Your campaign's ID (a UUID) from the StatGoblin campaign page. Blank disables collection.",
     scope: "world",
     config: true,
     type: String,

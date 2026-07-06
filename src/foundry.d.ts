@@ -4,9 +4,9 @@ import "fvtt-types";
 // sites. Pure types, no runtime output — add future Foundry-type patches here.
 declare global {
   interface SettingConfig {
-    "rollwatch.ingestUrl": string;
-    "rollwatch.ingestToken": string;
-    "rollwatch.campaignId": string;
+    "statgoblin.ingestUrl": string;
+    "statgoblin.ingestToken": string;
+    "statgoblin.campaignId": string;
   }
 }
 

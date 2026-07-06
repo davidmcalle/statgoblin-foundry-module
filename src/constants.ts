@@ -1,4 +1,4 @@
-export const MODULE_ID = "rollwatch" as const;
+export const MODULE_ID = "statgoblin" as const;
 
 export const INGEST_URL_SETTINGS_KEY = "ingestUrl";
 
