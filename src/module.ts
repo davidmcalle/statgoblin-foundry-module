@@ -1,6 +1,6 @@
 import { INGEST_TOKEN_SETTINGS_KEY, INGEST_URL_SETTINGS_KEY, MODULE_ID } from "./constants";
 import { registerEnrichers } from "./enrichers";
-import { buildEvent, hasRolls, MessageEventType } from "./payload";
+import { buildEvent, shouldMirror, MessageEventType } from "./payload";
 import { postEvent } from "./ingest";
 
 Hooks.once("init", () => {
@@ -25,15 +25,15 @@ Hooks.once("init", () => {
 
 Hooks.once("ready", () => {
   Hooks.on("createChatMessage", (message) => {
-    if (!hasRolls(message)) return;
+    if (!shouldMirror(message)) return;
     void postEvent(buildEvent(MessageEventType.Created, message));
   });
   Hooks.on("updateChatMessage", (message) => {
-    if (!hasRolls(message)) return;
+    if (!shouldMirror(message)) return;
     void postEvent(buildEvent(MessageEventType.Updated, message));
   });
   Hooks.on("deleteChatMessage", (message) => {
-    if (!hasRolls(message)) return;
+    if (!shouldMirror(message)) return;
     void postEvent(buildEvent(MessageEventType.Deleted, message));
   });
 });

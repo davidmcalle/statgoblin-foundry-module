@@ -20,9 +20,16 @@ const ROLE_BY_VALUE: readonly UserRole[] = [
   UserRole.Gamemaster,
 ];
 
-/** Mirror any message that carries rolls; the backend classifies the type. */
-export function hasRolls(message: ChatMessage): boolean {
-  return !!message.rolls?.length;
+/**
+ * Mirror any message that carries rolls OR a dnd5e activity usage card —
+ * ability/spell/item uses (Second Wind, Unleash Incarnation, …) often produce a
+ * roll-less chat card that's still worth tracking. Plain chat text is skipped.
+ * The backend classifies the type.
+ */
+export function shouldMirror(message: ChatMessage): boolean {
+  if (message.rolls?.length) return true;
+  const dnd5e = (message.flags as { dnd5e?: { activity?: unknown } } | undefined)?.dnd5e;
+  return !!dnd5e?.activity;
 }
 
 function absoluteUrl(path: string | null | undefined): string {
