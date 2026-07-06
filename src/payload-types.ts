@@ -24,6 +24,10 @@ export type ActorInfo = {
   id: string;
   name: string;
   image: string;
+  // dnd5e actor type: "character" (PC) vs "npc" (monster/NPC); "" if unknown.
+  type: string;
+  // Challenge rating, npc sheets only.
+  cr: number | null;
   token: TokenInfo | null;
 };
 

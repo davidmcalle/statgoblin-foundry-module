@@ -67,10 +67,20 @@ function actorOf(message: ChatMessage): ActorInfo | null {
   // `speaker.alias` (the token name, e.g. "Angry Phase Spider"). Foundry stores
   // both on the message, so they survive after the token/combat is gone.
   const tokenId = message.speaker?.token ?? null;
+  // `type` distinguishes "character" (PC) from "npc" (monster); npc sheets also
+  // carry a challenge rating — both feed the backend's monster analytics.
+  const type = (actor as { type?: string } | undefined)?.type ?? "";
+  const cr =
+    type === "npc"
+      ? ((actor as { system?: { details?: { cr?: number } } } | undefined)?.system?.details?.cr ??
+        null)
+      : null;
   return {
     id,
     name: actor?.name ?? "",
     image: absoluteUrl(actor?.img),
+    type,
+    cr,
     token: tokenId ? { id: tokenId, name: message.speaker?.alias ?? "" } : null,
   };
 }
