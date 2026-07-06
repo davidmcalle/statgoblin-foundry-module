@@ -167,6 +167,71 @@ function buildCollectedData(message: ChatMessage): CollectedData {
   };
 }
 
+type UsedActivity = {
+  id?: string;
+  uuid?: string;
+  type?: string;
+  name?: string;
+  item?: {
+    id?: string;
+    uuid?: string;
+    type?: string;
+    name?: string;
+    img?: string;
+    actor?: { id?: string; name?: string; img?: string };
+  };
+};
+
+/**
+ * Some activities (Manifest Echo, …) create no chat message at all — the
+ * postUseActivity hook is their only trace. Build a synthetic "created" event
+ * so the usage still reaches the backend. `flags.rollwatch.synthetic` marks it;
+ * the messageId is invented (no ChatMessage exists to update or delete).
+ */
+export function buildSyntheticUsageEvent(activity: UsedActivity): MessageEvent {
+  const item = activity.item;
+  const actor = item?.actor;
+  const user = game?.user;
+  return {
+    eventType: MessageEventType.Created,
+    messageId: `synthetic.${foundry.utils.randomID()}`,
+    collectedData: {
+      messageCreatedAt: new Date(),
+      author: user
+        ? {
+            id: user.id ?? "",
+            name: user.name ?? "",
+            avatar: absoluteUrl(user.avatar),
+            role: ROLE_BY_VALUE[user.role ?? 0] ?? UserRole.None,
+          }
+        : null,
+      actor: actor?.id
+        ? { id: actor.id, name: actor.name ?? "", image: absoluteUrl(actor.img), token: null }
+        : null,
+      item: item?.uuid
+        ? {
+            id: item.id ?? "",
+            uuid: item.uuid,
+            type: item.type ?? "",
+            name: item.name ?? "",
+            image: absoluteUrl(item.img),
+            activity: {
+              id: activity.id ?? "",
+              type: activity.type ?? "",
+              name: activity.name ?? "",
+            },
+          }
+        : null,
+      visibility: { whisper: [], blind: false },
+      world: worldOf(),
+      system: systemOf(),
+      flavor: "",
+      flags: { [MODULE_ID]: { synthetic: true } },
+      rolls: [],
+    },
+  };
+}
+
 /** Build the wire event. The campaign is identified by the Bearer token, not the body. */
 export function buildEvent(type: MessageEventType, message: ChatMessage): MessageEvent {
   if (!message.id) throw new Error(`${MODULE_ID} | ChatMessage delivered to hook without an id`);

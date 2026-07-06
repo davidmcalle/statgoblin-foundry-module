@@ -1,6 +1,6 @@
 {
   "name": "rollwatch-foundry-module",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Rollwatch — Foundry VTT module that sends your table's chat rolls to your self-hosted Rollwatch dashboard.",
   "license": "MIT",
   "private": true,
