@@ -22,15 +22,17 @@ const ROLE_BY_VALUE: readonly UserRole[] = [
 ];
 
 /**
- * Mirror any message that carries rolls OR a dnd5e activity usage card —
- * ability/spell/item uses (Second Wind, Unleash Incarnation, …) often produce a
- * roll-less chat card that's still worth tracking. Plain chat text is skipped.
- * The backend classifies the type.
+ * Mirror any message that carries rolls OR references a dnd5e item/activity —
+ * ability/spell/item uses (Second Wind, Unleash Incarnation, …) produce
+ * roll-less usage cards, and features without activities (Tactical Mind, …)
+ * produce bare description cards that only carry the item ref. Plain chat text
+ * is skipped. The backend classifies the type.
  */
 export function shouldMirror(message: ChatMessage): boolean {
   if (message.rolls?.length) return true;
-  const dnd5e = (message.flags as { dnd5e?: { activity?: unknown } } | undefined)?.dnd5e;
-  return !!dnd5e?.activity;
+  const dnd5e = (message.flags as { dnd5e?: { activity?: unknown; item?: unknown } } | undefined)
+    ?.dnd5e;
+  return !!(dnd5e?.activity || dnd5e?.item);
 }
 
 function absoluteUrl(path: string | null | undefined): string {
