@@ -6,6 +6,7 @@ declare global {
   interface SettingConfig {
     "rollwatch.ingestUrl": string;
     "rollwatch.ingestToken": string;
+    "rollwatch.campaignId": string;
   }
 }
 

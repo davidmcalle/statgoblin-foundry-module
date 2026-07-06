@@ -1,4 +1,9 @@
-import { INGEST_TOKEN_SETTINGS_KEY, INGEST_URL_SETTINGS_KEY, MODULE_ID } from "./constants";
+import {
+  CAMPAIGN_ID_SETTINGS_KEY,
+  INGEST_TOKEN_SETTINGS_KEY,
+  INGEST_URL_SETTINGS_KEY,
+  MODULE_ID,
+} from "./constants";
 import { registerEnrichers } from "./enrichers";
 import { buildEvent, shouldMirror, MessageEventType } from "./payload";
 import { postEvent } from "./ingest";
@@ -12,9 +17,17 @@ Hooks.once("init", () => {
     type: String,
     default: "",
   });
+  game.settings!.register(MODULE_ID, CAMPAIGN_ID_SETTINGS_KEY, {
+    name: "Campaign ID",
+    hint: "Your campaign's ID (a UUID) from the Rollwatch campaign page. Blank disables collection.",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "",
+  });
   game.settings!.register(MODULE_ID, INGEST_TOKEN_SETTINGS_KEY, {
-    name: "Ingest Token",
-    hint: "The secret ingest token for your campaign, from your Rollwatch dashboard. Blank disables collection.",
+    name: "Admin API Key",
+    hint: "The secret admin API key shown once when the campaign was created (the GM can regenerate it on the campaign page). Blank disables collection.",
     scope: "world",
     config: true,
     type: String,
