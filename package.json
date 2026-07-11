@@ -1,6 +1,6 @@
 {
   "name": "statgoblin-foundry-module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "StatGoblin — Foundry VTT module that sends your table's chat rolls to your self-hosted StatGoblin dashboard.",
   "license": "MIT",
   "private": true,
